@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+
+  # Those first two routes set up a convenient but unnecessary way for us to kick off the authorization process.
+  # The third is the important one — it routes to the create action of the Sessions controller when Google makes an HTTP GET request to localhost:3000/auth/google_oauth2/callback.
+
+  # config/routes.rb
+  GmailAlerts::Application.routes.draw do
+    root to: 'sessions#new'
+    resources :sessions, only: :index
+    get "/auth/:provider/callback" => 'sessions#create'
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
